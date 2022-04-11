@@ -7,19 +7,31 @@ The api follows the Json:API standard. The https://pub.dev/packages/japx package
 
 Dio
 
+Hero Animation
+
+Scroll To Top
+
 ## Future Considerations
 
 UI/UX/Branding
-Navigation in app bar
+Clean up scroll to top
+Sorting
+    Most Popular (readers)
+    Recently Reviewed
+    Date Published
+    Title*
+Pagination / Infinite Scroll w/ Api Calls
+Search/Filter
 About Dialog
 Style Collection Page
-Add Details Page
-Add Search function
+Style Details Page
 Add pull to refresh
 Splash Screen
-Dependency Injection
-Testing
-Environments
+Loading animation
+Error handling
 Data Sources - Repository wrapper and subclasses for api/db/etc.
+Person Super Class
+-Dependency Injection
+-Testing
+-Environments
 Dio and request logging and interceptors
-Logging for debug environements
