@@ -1,16 +1,27 @@
 # two_books
 
-A new Flutter project.
+A books app with a Collection page (index) and Details page using https://thomaxxl.pythonanywhere.com API. Built with Flutter.
+## Packages
 
-## Getting Started
+The api follows the Json:API standard. The https://pub.dev/packages/japx package is used to flatten complex json objects and relationships into simple Map<String, dynamic> objects.
 
-This project is a starting point for a Flutter application.
+Dio
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Structure
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Future Considerations
+
+Testing
+Environments
+Data Sources - Repository wrapper and subclasses for api/db/etc.
+UI/UX/Branding
+Logging for debug environements
+Navigation in app bar
+About Dialog
+Collection Page
+Details Page
+Search function
+Theme
+Splash Screen
