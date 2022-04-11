@@ -10,7 +10,7 @@ class BookResponse {
   });
 
   BookResponse.fromJson(Map<String, dynamic> json)
-      : books = (json['books'] as List).map((e) => Book.fromJson(e)).toList(),
+      : books = (json['data'] as List).map((e) => Book.fromJson(e)).toList(),
         error = '';
 
   BookResponse.withError(String errorValue)
