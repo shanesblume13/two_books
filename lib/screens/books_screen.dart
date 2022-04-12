@@ -72,10 +72,12 @@ class _BooksScreenState extends State<BooksScreen> {
                     child: ListTile(
                       onTap: () => _goToBookDetailsPage(context, book),
                       leading: CircleAvatar(
+                        radius: 20,
                         backgroundColor: book.color,
                         child: const Icon(
                           Icons.book,
                           color: Colors.white,
+                          size: 20,
                         ),
                       ),
                       title: Text(book.title),

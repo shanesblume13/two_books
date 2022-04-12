@@ -22,17 +22,26 @@ class BookDetailsScreen extends StatelessWidget {
             tag: book.id,
             transitionOnUserGestures: true,
             child: Card(
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: book.color,
-                  child: const Icon(
-                    Icons.book,
-                    color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: book.color,
+                    child: const Icon(
+                      Icons.book,
+                      color: Colors.white,
+                      size: 30,
+                    ),
                   ),
-                ),
-                title: Text(book.title),
-                subtitle: Text(
-                  'by ${book.author.name}',
+                  title: Text(
+                    book.title,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  subtitle: Text(
+                    'by ${book.author.name}',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
                 ),
               ),
             ),
