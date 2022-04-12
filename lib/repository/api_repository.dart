@@ -14,6 +14,8 @@ class ApiRepository {
   Future<BookResponse> getBooks() async {
     Map<String, dynamic> params = {
       'include': 'publisher,author,reviews',
+      //'filter[title]': 'book_title0',
+      // 'filter': '[{"name":"title","op":"eq","val":"book_title0"}]',
     };
 
     try {
@@ -22,8 +24,6 @@ class ApiRepository {
 
       return BookResponse.fromJson(Japx.decode(response.data));
     } catch (error, stacktrace) {
-      // TODO remove print from production code.
-      print('Exception: $error \n stacktrace: $stacktrace');
       return BookResponse.withError('Error getting books. \n $error');
     }
   }
