@@ -13,19 +13,12 @@ Scroll To Top
 
 ## Future Considerations
 
-Comments
-Clean up scroll to top
-Pagination / Infinite Scroll w/ Api Calls
 Search/Filter
 About Dialog
-Style Collection Page
-Style Details Page
-Add pull to refresh
 Splash Screen
 Loading animation
-Error handling
+Test error and no reponse states (inlcuding dio errors)
 Data Sources - Repository wrapper and subclasses for api/db/etc.
-Person Super Class
 Sorting
     Most Popular (readers)
     Recently Reviewed

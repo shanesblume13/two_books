@@ -14,6 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Two Books',
       theme: ThemeData(
+        // Using custom colors in a few places, but should set up a full theme
+        // in the future.
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),

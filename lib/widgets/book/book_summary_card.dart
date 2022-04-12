@@ -29,27 +29,31 @@ class BookSummaryCard extends StatelessWidget {
         ? Theme.of(context).textTheme.titleSmall
         : Theme.of(context).textTheme.subtitle2;
 
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: _vericalPadding),
-        child: ListTile(
-          onTap: () => onTap?.call(),
-          leading: CircleAvatar(
-            radius: _avatarSize,
-            backgroundColor: Colors.blue,
-            child: Icon(
-              Icons.book,
-              color: Colors.white,
-              size: _avatarSize,
+    return Hero(
+      tag: book.id,
+      transitionOnUserGestures: true,
+      child: Card(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: _vericalPadding),
+          child: ListTile(
+            onTap: () => onTap?.call(),
+            leading: CircleAvatar(
+              radius: _avatarSize,
+              backgroundColor: const Color(0xffee592c),
+              child: Icon(
+                Icons.book,
+                color: Colors.white,
+                size: _avatarSize,
+              ),
             ),
-          ),
-          title: Text(
-            book.title,
-            style: _titleTextStyle,
-          ),
-          subtitle: Text(
-            'by ${book.author?.name ?? 'Unknown Author'}',
-            style: _authorTextStyle,
+            title: Text(
+              book.title,
+              style: _titleTextStyle,
+            ),
+            subtitle: Text(
+              'by ${book.author?.name ?? 'Unknown Author'}',
+              style: _authorTextStyle,
+            ),
           ),
         ),
       ),

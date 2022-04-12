@@ -4,6 +4,7 @@ import 'package:two_books/models/api_response/book_with_details_response.dart';
 import 'package:two_books/models/book.dart';
 import 'package:two_books/widgets/book/book_detail_list.dart';
 import 'package:two_books/widgets/book/book_summary_card.dart';
+import 'package:two_books/widgets/my_app_bar.dart';
 import 'package:two_books/widgets/status/error_list_tile.dart';
 import 'package:two_books/widgets/status/no_results_list_tile.dart';
 
@@ -43,20 +44,17 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Book Details'),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: MyAppBar(title: 'Book Details'),
       ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Hero(
-              tag: widget.book.id,
-              transitionOnUserGestures: true,
-              child: BookSummaryCard(
-                book: widget.book,
-                isExpanded: true,
-              ),
+            BookSummaryCard(
+              book: widget.book,
+              isExpanded: true,
             ),
             Expanded(
               child: RefreshIndicator(

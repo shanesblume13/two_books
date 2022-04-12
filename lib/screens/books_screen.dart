@@ -40,10 +40,9 @@ class _BooksScreenState extends State<BooksScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(50.0),
-        child: MyAppBar(),
+        child: MyAppBar(title: 'Two Book'),
       ),
       body: SafeArea(
         child: RefreshIndicator(
@@ -87,14 +86,10 @@ class _BooksScreenState extends State<BooksScreen> {
         Book book = books[index];
 
         // Hero used for smooth transition between screens
-        return Hero(
-          tag: book.id,
-          transitionOnUserGestures: true,
-          child: BookSummaryCard(
-            book: book,
-            isExpanded: false,
-            onTap: () => _goToBookDetailsPage(context, book),
-          ),
+        return BookSummaryCard(
+          book: book,
+          isExpanded: false,
+          onTap: () => _goToBookDetailsPage(context, book),
         );
       },
     );
