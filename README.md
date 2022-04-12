@@ -13,13 +13,8 @@ Scroll To Top
 
 ## Future Considerations
 
-UI/UX/Branding
+Comments
 Clean up scroll to top
-Sorting
-    Most Popular (readers)
-    Recently Reviewed
-    Date Published
-    Title*
 Pagination / Infinite Scroll w/ Api Calls
 Search/Filter
 About Dialog
@@ -31,6 +26,13 @@ Loading animation
 Error handling
 Data Sources - Repository wrapper and subclasses for api/db/etc.
 Person Super Class
+Sorting
+    Most Popular (readers)
+    Recently Reviewed
+    Date Published
+    Title*
+UI/UX/Branding
+-Create books states class
 -Dependency Injection
 -Testing
 -Environments

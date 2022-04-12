@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:two_books/models/author.dart';
+import 'package:two_books/models/publisher.dart';
 import 'package:two_books/models/reader.dart';
 import 'package:two_books/models/review.dart';
 
@@ -8,6 +9,7 @@ class Book {
   final String id;
   final String title;
   final Author author;
+  final Publisher publisher;
   final List<Review> reviews;
   final List<Reader> readers;
   final Color color;
@@ -16,6 +18,7 @@ class Book {
     required this.id,
     required this.title,
     required this.author,
+    required this.publisher,
     required this.reviews,
     required this.readers,
     required this.color,
@@ -26,6 +29,7 @@ class Book {
       : id = json['id'],
         title = json['title'],
         author = Author.fromJson(json['author']),
+        publisher = Publisher.fromJson(json['publisher']),
         reviews = json['reviews'] != null
             ? (json['reviews'] as List<dynamic>)
                 .map((review) => Review.fromJson(review))
