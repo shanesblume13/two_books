@@ -1,19 +1,19 @@
 import 'package:two_books/models/book.dart';
 
-class BookResponse {
+class BooksResponse {
   final List<Book> books;
-  final String error;
+  final String? error;
 
-  BookResponse({
+  BooksResponse({
     required this.books,
     required this.error,
   });
 
-  BookResponse.fromJson(Map<String, dynamic> json)
+  BooksResponse.fromJson(Map<String, dynamic> json)
       : books = (json['data'] as List).map((e) => Book.fromJson(e)).toList(),
-        error = '';
+        error = null;
 
-  BookResponse.withError(String errorValue)
+  BooksResponse.withError(String errorValue)
       : books = [],
         error = errorValue;
 }

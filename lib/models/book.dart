@@ -1,44 +1,37 @@
-import 'dart:math';
-import 'package:flutter/material.dart';
-import 'package:two_books/models/author.dart';
 import 'package:two_books/models/publisher.dart';
-import 'package:two_books/models/reader.dart';
+import 'package:two_books/models/person.dart';
 import 'package:two_books/models/review.dart';
 
 class Book {
   final String id;
   final String title;
-  final Author author;
-  final Publisher publisher;
+  final Person? author;
+  final Publisher? publisher;
   final List<Review> reviews;
-  final List<Reader> readers;
-  final Color color;
+  final Person? reader;
 
   Book({
     required this.id,
     required this.title,
-    required this.author,
-    required this.publisher,
+    this.author,
+    this.publisher,
     required this.reviews,
-    required this.readers,
-    required this.color,
+    this.reader,
   });
 
-  // TODO Figure out if we want to use a factory or not
   Book.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        title = json['title'],
-        author = Author.fromJson(json['author']),
-        publisher = Publisher.fromJson(json['publisher']),
+        title = json['title'] ?? 'Untitled',
+        author =
+            json['author'] != null ? Person.fromJson(json['author']) : null,
+        publisher = json['publisher'] != null
+            ? Publisher.fromJson(json['publisher'])
+            : null,
         reviews = json['reviews'] != null
             ? (json['reviews'] as List<dynamic>)
                 .map((review) => Review.fromJson(review))
                 .toList()
             : [],
-        readers = json['readers'] != null
-            ? (json['readers'] as List<dynamic>)
-                .map((reader) => Reader.fromJson(reader))
-                .toList()
-            : [],
-        color = Colors.primaries[Random().nextInt(Colors.primaries.length)];
+        reader =
+            json['reader'] != null ? Person.fromJson(json['reader']) : null;
 }

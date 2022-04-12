@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:two_books/bloc/get_all_books_bloc.dart';
-import 'package:two_books/bloc/show_scroll_to_top_bloc.dart';
+import 'package:two_books/bloc/get_books_bloc.dart';
+import 'package:two_books/bloc/scroll_to_top_bloc.dart';
+import 'package:two_books/models/api_response/book_response.dart';
 import 'package:two_books/models/book.dart';
-import 'package:two_books/models/book_response.dart';
 import 'package:two_books/screens/book_details_screen.dart';
+import 'package:two_books/widgets/book/book_summary_card.dart';
+import 'package:two_books/widgets/status/error_list_tile.dart';
+import 'package:two_books/widgets/my_app_bar.dart';
+import 'package:two_books/widgets/status/no_results_list_tile.dart';
+import 'package:two_books/widgets/scroll_to_top_fab.dart';
 
 class BooksScreen extends StatefulWidget {
   const BooksScreen({Key? key}) : super(key: key);
@@ -14,97 +19,94 @@ class BooksScreen extends StatefulWidget {
 
 class _BooksScreenState extends State<BooksScreen> {
   @override
-  void initState() {
+  initState() {
+    scrollToTopBloc.setupScrollListener(ScrollController());
+    getBooksBloc.getBooks();
+
     super.initState();
-    getAllBooksBloc.getAllBooks();
   }
 
-  // TODO Do we really need to dispose and drain here?
   @override
   void dispose() {
-    getAllBooksBloc.drainStream();
+    scrollToTopBloc.drainStream();
+    getBooksBloc.drainStream();
     super.dispose();
   }
 
   Future<void> _handleRefresh() async {
-    getAllBooksBloc.getAllBooks();
+    await getBooksBloc.getBooks();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<BookResponse>(
-      stream: getAllBooksBloc.subject.stream,
-      builder: (context, AsyncSnapshot<BookResponse> snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data!.error != '') {
-            return RefreshIndicator(
-              onRefresh: _handleRefresh,
-              child: ListView(
-                children: [
-                  Text(snapshot.data!.error),
-                ],
-              ),
-            );
-          }
-          if (snapshot.data!.books.isEmpty) {
-            return RefreshIndicator(
-              onRefresh: _handleRefresh,
-              child: ListView(
-                children: const [
-                  Text('No results'),
-                ],
-              ),
-            );
-          }
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: MyAppBar(),
+      ),
+      body: SafeArea(
+        child: RefreshIndicator(
+          onRefresh: _handleRefresh,
+          child: StreamBuilder<BooksResponse>(
+            stream: getBooksBloc.subject.stream,
+            builder: (context, AsyncSnapshot<BooksResponse> snapshot) {
+              if (snapshot.hasData) {
+                BooksResponse booksResponse = snapshot.data!;
 
-          return RefreshIndicator(
-            onRefresh: () => _handleRefresh(),
-            child: ListView.builder(
-              controller: showScrollToTopBloc.scrollController,
-              itemCount: snapshot.data!.books.length,
-              itemBuilder: (context, index) {
-                Book book = snapshot.data!.books[index];
+                // Handle response errors
+                if (booksResponse.error != null) {
+                  return ErrorListTile(error: booksResponse.error);
+                }
 
-                return Hero(
-                  tag: book.id,
-                  transitionOnUserGestures: true,
-                  child: Card(
-                    child: ListTile(
-                      onTap: () => _goToBookDetailsPage(context, book),
-                      leading: CircleAvatar(
-                        radius: 20,
-                        backgroundColor: book.color,
-                        child: const Icon(
-                          Icons.book,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
-                      title: Text(book.title),
-                      subtitle: Text(
-                        'by ${book.author.name}',
-                      ),
-                      trailing: const Icon(
-                        Icons.keyboard_arrow_right,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          );
-        }
-        return const Center(
-          child: CircularProgressIndicator(),
+                // Handle a successful but empty response
+                if (booksResponse.books.isEmpty) {
+                  return const NoResultsListTile();
+                }
+
+                // Handle a successful response
+                return buildBooksListView(booksResponse.books);
+              }
+
+              // Loading state
+              return const Center(child: CircularProgressIndicator());
+            },
+          ),
+        ),
+      ),
+      floatingActionButton: const ScrollToTopFAB(),
+    );
+  }
+
+  // Build a list of book list tiles from a list of books
+  ListView buildBooksListView(List<Book> books) {
+    return ListView.builder(
+      controller: scrollToTopBloc.scrollController,
+      itemCount: books.length,
+      itemBuilder: (context, index) {
+        Book book = books[index];
+
+        // Hero used for smooth transition between screens
+        return Hero(
+          tag: book.id,
+          transitionOnUserGestures: true,
+          child: BookSummaryCard(
+            book: book,
+            isExpanded: false,
+            onTap: () => _goToBookDetailsPage(context, book),
+          ),
         );
       },
     );
   }
 
+  // Navigation could be more robust, but this does the job
+  // in a 2 page application.
   void _goToBookDetailsPage(BuildContext context, Book book) {
-    Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (BuildContext context) => BookDetailsScreen(book: book),
-    ));
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) => BookDetailsScreen(book: book),
+      ),
+    );
   }
 }
