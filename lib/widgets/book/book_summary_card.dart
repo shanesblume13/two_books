@@ -36,6 +36,8 @@ class BookSummaryCard extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: _vericalPadding),
           child: ListTile(
+            // This process allows the summary card on the deetail page to be
+            // tapped for a splash effect, with no action. Splash should be removed.
             onTap: () => onTap?.call(),
             leading: CircleAvatar(
               radius: _avatarSize,

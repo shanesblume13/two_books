@@ -15,7 +15,7 @@ class GetBooksBloc {
   }
 
   void drainStream() {
-    _subject.value = BooksResponse(books: [], error: '');
+    _subject.value = BooksResponse(books: [], error: null);
   }
 
   @mustCallSuper

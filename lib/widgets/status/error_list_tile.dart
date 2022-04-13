@@ -12,7 +12,29 @@ class ErrorListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        Text(error ?? 'Unknown Error'),
+        SizedBox(
+          height: 100,
+          child: Card(
+            color: Colors.red[50],
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: Colors.red[100]!,
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Center(
+              child: Text(
+                // Show detailed error message in future
+                'Something went wrong!',
+                //error ?? 'Something went wrong',
+              ),
+            ),
+          ),
+        )
+        // Card(
+        //   child: Text(error ?? 'Unknown Error'),
+        // ),
       ],
     );
   }

@@ -16,7 +16,7 @@ class GetBookWithDetailsBloc {
   }
 
   void drainStream() {
-    _subject.value = BookWithDetailsResponse(book: null, error: '');
+    _subject.value = BookWithDetailsResponse(book: null, error: null);
   }
 
   @mustCallSuper
