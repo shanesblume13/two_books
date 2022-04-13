@@ -15,18 +15,19 @@ class ErrorListTile extends StatelessWidget {
         SizedBox(
           height: 100,
           child: Card(
-            color: Colors.red[50],
             shape: RoundedRectangleBorder(
               side: BorderSide(
-                color: Colors.red[100]!,
+                color: Theme.of(context).colorScheme.errorContainer,
                 width: 2,
               ),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Center(
+            child: Center(
               child: Text(
                 // Show detailed error message in future
                 'Something went wrong!',
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.errorContainer),
                 //error ?? 'Something went wrong',
               ),
             ),

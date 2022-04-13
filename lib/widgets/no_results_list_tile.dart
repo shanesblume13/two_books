@@ -12,18 +12,19 @@ class NoResultsListTile extends StatelessWidget {
         SizedBox(
           height: 100,
           child: Card(
-            color: Colors.grey[50],
             shape: RoundedRectangleBorder(
               side: BorderSide(
-                color: Colors.grey[100]!,
+                color: Theme.of(context).colorScheme.tertiaryContainer,
                 width: 2,
               ),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Center(
+            child: Center(
               child: Text(
                 // Show detailed error message in future
-                'No Results Found',
+                'No reults found.',
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.tertiaryContainer),
                 //error ?? 'Something went wrong',
               ),
             ),

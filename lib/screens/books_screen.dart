@@ -52,31 +52,33 @@ class _BooksScreenState extends State<BooksScreen> {
           children: [
             buildSearchTextInput(),
             Expanded(
-              child: RefreshIndicator(
-                onRefresh: _handleRefresh,
-                child: StreamBuilder<BooksResponse>(
-                  stream: getBooksBloc.subject.stream,
-                  builder: (context, AsyncSnapshot<BooksResponse> snapshot) {
-                    if (snapshot.hasData) {
-                      BooksResponse booksResponse = snapshot.data!;
+              child: Card(
+                child: RefreshIndicator(
+                  onRefresh: _handleRefresh,
+                  child: StreamBuilder<BooksResponse>(
+                    stream: getBooksBloc.subject.stream,
+                    builder: (context, AsyncSnapshot<BooksResponse> snapshot) {
+                      if (snapshot.hasData) {
+                        BooksResponse booksResponse = snapshot.data!;
 
-                      // Handle response errors
-                      if (booksResponse.error != null) {
-                        return ErrorListTile(error: booksResponse.error);
+                        // Handle response errors
+                        if (booksResponse.error != null) {
+                          return ErrorListTile(error: booksResponse.error);
+                        }
+
+                        // Handle a successful but empty response
+                        if (booksResponse.books.isEmpty) {
+                          return const NoResultsListTile();
+                        }
+
+                        // Handle a successful response
+                        return buildBooksListView(booksResponse.books);
                       }
 
-                      // Handle a successful but empty response
-                      if (booksResponse.books.isEmpty) {
-                        return const NoResultsListTile();
-                      }
-
-                      // Handle a successful response
-                      return buildBooksListView(booksResponse.books);
-                    }
-
-                    // Loading state
-                    return const Center(child: CircularProgressIndicator());
-                  },
+                      // Loading state
+                      return const Center(child: CircularProgressIndicator());
+                    },
+                  ),
                 ),
               ),
             ),

@@ -21,19 +21,29 @@ class BookDetailsScreen extends StatefulWidget {
 }
 
 class _BookDetailsScreenState extends State<BookDetailsScreen> {
+  // isLoading is added to the state and managed by loadbookDetails (async).
+  // This is a quick way to make sure we don't show a loading indicator instead
+  // of the old book details when revisiting the book page. Can be moved/expanded
+  // to a more robust solution if needed.
+  bool isLoading = false;
+
   @override
   void initState() {
-    // Although we pass a book in, we use the bloc to get additional details
-    // with a fresh api call. This also allows us to refresh the details on pull
-    // without loading all the books again.
-    getBookWithDetailsBloc.getBookWithDetails(widget.book.id);
+    loadBookDetails();
 
     super.initState();
   }
 
+  // This allows us to wait for a new response before using snapshot.hasData
+  // in the streambuilder.
+  void loadBookDetails() async {
+    isLoading = true;
+    await getBookWithDetailsBloc.getBookWithDetails(widget.book.id);
+    isLoading = false;
+  }
+
   @override
   void dispose() {
-    getBookWithDetailsBloc.drainStream();
     super.dispose();
   }
 
@@ -57,32 +67,36 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               isExpanded: true,
             ),
             Expanded(
-              child: RefreshIndicator(
-                onRefresh: _handleRefresh,
-                child: StreamBuilder<BookWithDetailsResponse>(
-                  stream: getBookWithDetailsBloc.subject.stream,
-                  builder: (context,
-                      AsyncSnapshot<BookWithDetailsResponse> snapshot) {
-                    if (snapshot.hasData) {
-                      BookWithDetailsResponse bookWithDetailsResponse =
-                          snapshot.data!;
+              child: Card(
+                child: RefreshIndicator(
+                  onRefresh: _handleRefresh,
+                  child: StreamBuilder<BookWithDetailsResponse>(
+                    stream: getBookWithDetailsBloc.subject.stream,
+                    builder: (context,
+                        AsyncSnapshot<BookWithDetailsResponse> snapshot) {
+                      if (snapshot.hasData && isLoading == false) {
+                        BookWithDetailsResponse bookWithDetailsResponse =
+                            snapshot.data!;
 
-                      // Handle response errors
-                      if (bookWithDetailsResponse.error != null) {
-                        return ErrorListTile(
-                            error: bookWithDetailsResponse.error);
+                        // Handle response errors
+                        if (bookWithDetailsResponse.error != null) {
+                          return ErrorListTile(
+                              error: bookWithDetailsResponse.error);
+                        }
+                        // Handle a successful but empty response
+                        // This shows for a moment when revisiting the detail page.
+                        // Need to revisit this.
+                        if (bookWithDetailsResponse.book == null) {
+                          return const NoResultsListTile();
+                        }
+
+                        return BookDetailsCard(
+                            book: bookWithDetailsResponse.book!);
                       }
-                      // Handle a successful but empty response
-                      if (bookWithDetailsResponse.book == null) {
-                        return const NoResultsListTile();
-                      }
 
-                      return BookDetailsCard(
-                          book: bookWithDetailsResponse.book!);
-                    }
-
-                    return const Center(child: CircularProgressIndicator());
-                  },
+                      return const Center(child: CircularProgressIndicator());
+                    },
+                  ),
                 ),
               ),
             ),
