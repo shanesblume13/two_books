@@ -11,9 +11,13 @@ Hero Animation
 
 Scroll To Top
 
-## Future Considerations
+Error handling
 
-Test error and no reponse states (inlcuding dio errors)
+Search
+
+Blocs
+
+## Future Considerations
 -Data Sources - Repository wrapper and subclasses for api/db/etc.
 -Filter Buttons
 -Setup material theme
