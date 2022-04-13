@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:two_books/widgets/info_icon_button.dart';
 
 class MyAppBar extends StatelessWidget {
   final String title;
@@ -11,13 +12,16 @@ class MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: const Color(0xff4a4c51),
+      backgroundColor: Colors.blueGrey,
       title: Text(
         title,
         style: const TextStyle(
           color: Colors.white,
         ),
       ),
+      actions: const [
+        InfoIconButton(),
+      ],
     );
   }
 }

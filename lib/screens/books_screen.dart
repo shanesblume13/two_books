@@ -18,6 +18,9 @@ class BooksScreen extends StatefulWidget {
 }
 
 class _BooksScreenState extends State<BooksScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  String searchText = '';
+
   @override
   initState() {
     scrollToTopBloc.setupScrollListener(ScrollController());
@@ -42,43 +45,92 @@ class _BooksScreenState extends State<BooksScreen> {
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(50.0),
-        child: MyAppBar(title: 'Two Book'),
+        child: MyAppBar(title: 'Two Books'),
       ),
       body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: _handleRefresh,
-          child: StreamBuilder<BooksResponse>(
-            stream: getBooksBloc.subject.stream,
-            builder: (context, AsyncSnapshot<BooksResponse> snapshot) {
-              if (snapshot.hasData) {
-                BooksResponse booksResponse = snapshot.data!;
+        child: Column(
+          children: [
+            buildSearchTextInput(),
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: _handleRefresh,
+                child: StreamBuilder<BooksResponse>(
+                  stream: getBooksBloc.subject.stream,
+                  builder: (context, AsyncSnapshot<BooksResponse> snapshot) {
+                    if (snapshot.hasData) {
+                      BooksResponse booksResponse = snapshot.data!;
 
-                // Handle response errors
-                if (booksResponse.error != null) {
-                  return ErrorListTile(error: booksResponse.error);
-                }
+                      // Handle response errors
+                      if (booksResponse.error != null) {
+                        return ErrorListTile(error: booksResponse.error);
+                      }
 
-                // Handle a successful but empty response
-                if (booksResponse.books.isEmpty) {
-                  return const NoResultsListTile();
-                }
+                      // Handle a successful but empty response
+                      if (booksResponse.books.isEmpty) {
+                        return const NoResultsListTile();
+                      }
 
-                // Handle a successful response
-                return buildBooksListView(booksResponse.books);
-              }
+                      // Handle a successful response
+                      return buildBooksListView(booksResponse.books);
+                    }
 
-              // Loading state
-              return const Center(child: CircularProgressIndicator());
-            },
-          ),
+                    // Loading state
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: const ScrollToTopFAB(),
     );
   }
 
-  // Build a list of book list tiles from a list of books
+  Padding buildSearchTextInput() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        controller: _searchController,
+        onChanged: (value) {
+          setState(() {
+            searchText = value;
+          });
+        },
+        decoration: InputDecoration(
+          hintText: 'Search...',
+          border: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.blueGrey, width: 2.0),
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.deepOrange, width: 2.0),
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          prefixIcon: const Icon(Icons.search, color: Colors.grey),
+          suffixIcon: IconButton(
+            onPressed: () {
+              _searchController.clear();
+              setState(() {
+                searchText = '';
+              });
+            },
+            icon: const Icon(
+              Icons.clear,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   ListView buildBooksListView(List<Book> books) {
+    // Use search text to filter books before building list
+    if (searchText.isNotEmpty) {
+      books = books.where((book) => bookMatchesSearchText(book)).toList();
+    }
+
     return ListView.builder(
       controller: scrollToTopBloc.scrollController,
       itemCount: books.length,
@@ -94,6 +146,14 @@ class _BooksScreenState extends State<BooksScreen> {
       },
     );
   }
+
+  // We could add readers and publishers to the search match, but since those
+  // fields aren't displated on this page it would take a little more design
+  // thought to communicate to the user why books are matching on those fields.
+  bool bookMatchesSearchText(Book book) =>
+      book.title.toLowerCase().contains(searchText.toLowerCase()) ||
+      (book.author?.name.toLowerCase().contains(searchText.toLowerCase()) ??
+          false);
 
   // Navigation could be more robust, but this does the job
   // in a 2 page application.

@@ -39,7 +39,7 @@ class BookSummaryCard extends StatelessWidget {
             onTap: () => onTap?.call(),
             leading: CircleAvatar(
               radius: _avatarSize,
-              backgroundColor: const Color(0xffee592c),
+              backgroundColor: Colors.deepOrange,
               child: Icon(
                 Icons.book,
                 color: Colors.white,

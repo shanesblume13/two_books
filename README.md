@@ -13,20 +13,13 @@ Scroll To Top
 
 ## Future Considerations
 
-Search/Filter
-About Dialog
-Splash Screen
-Loading animation
 Test error and no reponse states (inlcuding dio errors)
-Data Sources - Repository wrapper and subclasses for api/db/etc.
-Sorting
-    Most Popular (readers)
-    Recently Reviewed
-    Date Published
-    Title*
-UI/UX/Branding
+-Data Sources - Repository wrapper and subclasses for api/db/etc.
+-Filter Buttons
+-Setup material theme
+-Splash Screen
+-Loading animation
 -Create books states class
--Dependency Injection
 -Testing
 -Environments
-Dio and request logging and interceptors
+-Dio and request logging and interceptors

@@ -34,7 +34,7 @@ dependencies:
   dio: ^4.0.6
   rxdart: ^0.27.3
   japx: ^2.0.4
-  equatable: ^2.0.3
+  url_launcher: ^6.0.20
 
 
   # The following adds the Cupertino Icons font to your application.
