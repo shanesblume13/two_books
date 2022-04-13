@@ -84,8 +84,6 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                               error: bookWithDetailsResponse.error);
                         }
                         // Handle a successful but empty response
-                        // This shows for a moment when revisiting the detail page.
-                        // Need to revisit this.
                         if (bookWithDetailsResponse.book == null) {
                           return const NoResultsListTile();
                         }
