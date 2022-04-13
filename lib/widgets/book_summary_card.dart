@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:two_books/models/book.dart';
+import 'package:two_books/models/book/book.dart';
 
 // This card has two states, expanded and not expanded.
 // Expanded is used as a header on the book details page.
@@ -24,9 +24,9 @@ class BookSummaryCard extends StatelessWidget {
     double _avatarSize = isExpanded ? 30.0 : 20.0;
     TextStyle? _titleTextStyle = isExpanded
         ? Theme.of(context).textTheme.titleLarge
-        : Theme.of(context).textTheme.subtitle1;
+        : Theme.of(context).textTheme.titleMedium;
     TextStyle? _authorTextStyle = isExpanded
-        ? Theme.of(context).textTheme.titleSmall
+        ? Theme.of(context).textTheme.subtitle1
         : Theme.of(context).textTheme.subtitle2;
 
     return Hero(
@@ -41,7 +41,7 @@ class BookSummaryCard extends StatelessWidget {
             onTap: () => onTap?.call(),
             leading: CircleAvatar(
               radius: _avatarSize,
-              backgroundColor: Colors.deepOrange,
+              backgroundColor: Theme.of(context).colorScheme.secondary,
               child: Icon(
                 Icons.book,
                 color: Colors.white,

@@ -13,8 +13,12 @@ class ScrollToTopFAB extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data == true) {
           return FloatingActionButton(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
             onPressed: () => scrollToTopBloc.scrollToTop(),
-            child: const Icon(Icons.arrow_upward),
+            child: const Icon(
+              Icons.arrow_upward,
+              color: Colors.white,
+            ),
           );
         }
         return Container();

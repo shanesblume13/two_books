@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:two_books/bloc/get_books_bloc.dart';
 import 'package:two_books/bloc/scroll_to_top_bloc.dart';
-import 'package:two_books/models/api_response/book_response.dart';
-import 'package:two_books/models/book.dart';
+import 'package:two_books/models/book/book.dart';
+import 'package:two_books/models/book/book_response.dart';
 import 'package:two_books/screens/book_details_screen.dart';
-import 'package:two_books/widgets/book/book_summary_card.dart';
-import 'package:two_books/widgets/status/error_list_tile.dart';
+import 'package:two_books/widgets/book_summary_card.dart';
+import 'package:two_books/widgets/error_list_tile.dart';
 import 'package:two_books/widgets/my_app_bar.dart';
-import 'package:two_books/widgets/status/no_results_list_tile.dart';
+import 'package:two_books/widgets/no_results_list_tile.dart';
 import 'package:two_books/widgets/scroll_to_top_fab.dart';
 
 class BooksScreen extends StatefulWidget {
@@ -99,15 +99,16 @@ class _BooksScreenState extends State<BooksScreen> {
         },
         decoration: InputDecoration(
           hintText: 'Search...',
+          fillColor: Colors.white,
           border: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.blueGrey, width: 2.0),
+            borderSide: const BorderSide(width: 2.0),
             borderRadius: BorderRadius.circular(20.0),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.deepOrange, width: 2.0),
+            borderSide: const BorderSide(width: 2.0),
             borderRadius: BorderRadius.circular(20.0),
           ),
-          prefixIcon: const Icon(Icons.search, color: Colors.grey),
+          prefixIcon: const Icon(Icons.search),
           suffixIcon: IconButton(
             onPressed: () {
               _searchController.clear();
@@ -115,10 +116,7 @@ class _BooksScreenState extends State<BooksScreen> {
                 searchText = '';
               });
             },
-            icon: const Icon(
-              Icons.clear,
-              color: Colors.grey,
-            ),
+            icon: const Icon(Icons.clear),
           ),
         ),
       ),

@@ -10,19 +10,14 @@ class InfoIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(
-        Icons.info,
-        color: Colors.white,
-      ),
+      icon: const Icon(Icons.info),
       onPressed: () {
         showAboutDialog(
           context: context,
           applicationIcon: const CircleAvatar(
             radius: 20,
-            backgroundColor: Colors.deepOrange, // MassageBook Orange
             child: Icon(
               Icons.book,
-              color: Colors.white,
               size: 20,
             ),
           ),

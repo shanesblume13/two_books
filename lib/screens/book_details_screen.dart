@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:two_books/bloc/get_book_with_details_bloc.dart';
-import 'package:two_books/models/api_response/book_with_details_response.dart';
-import 'package:two_books/models/book.dart';
-import 'package:two_books/widgets/book/book_detail_list.dart';
-import 'package:two_books/widgets/book/book_summary_card.dart';
+import 'package:two_books/models/book/book.dart';
+import 'package:two_books/models/book/book_with_details_response.dart';
+import 'package:two_books/widgets/book_details_card.dart';
+import 'package:two_books/widgets/book_summary_card.dart';
 import 'package:two_books/widgets/my_app_bar.dart';
-import 'package:two_books/widgets/status/error_list_tile.dart';
-import 'package:two_books/widgets/status/no_results_list_tile.dart';
+import 'package:two_books/widgets/error_list_tile.dart';
+import 'package:two_books/widgets/no_results_list_tile.dart';
 
 class BookDetailsScreen extends StatefulWidget {
   final Book book;
@@ -77,9 +77,8 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                         return const NoResultsListTile();
                       }
 
-                      return BookDetailList(
-                        book: bookWithDetailsResponse.book!,
-                      );
+                      return BookDetailsCard(
+                          book: bookWithDetailsResponse.book!);
                     }
 
                     return const Center(child: CircularProgressIndicator());

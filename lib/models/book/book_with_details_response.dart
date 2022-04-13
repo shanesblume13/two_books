@@ -1,4 +1,4 @@
-import 'package:two_books/models/book.dart';
+import 'package:two_books/models/book/book.dart';
 
 class BookWithDetailsResponse {
   final Book? book;

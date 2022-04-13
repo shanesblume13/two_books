@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:japx/japx.dart';
-import 'package:two_books/models/api_response/book_with_details_response.dart';
-import 'package:two_books/models/api_response/book_response.dart';
+import 'package:two_books/models/book/book_response.dart';
+import 'package:two_books/models/book/book_with_details_response.dart';
 
 class ApiRepository {
   final Dio _dio = Dio();
