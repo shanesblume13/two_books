@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:two_books/models/book/book.dart';
+import 'package:two_books/models/book.dart';
 
 // This card has two states, expanded and not expanded.
 // Expanded is used as a header on the book details page.

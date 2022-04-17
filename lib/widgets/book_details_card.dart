@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:two_books/models/book/book.dart';
+import 'package:two_books/models/book.dart';
 import 'package:two_books/models/review.dart';
 
 class BookDetailsCard extends StatelessWidget {

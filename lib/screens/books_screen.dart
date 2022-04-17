@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:two_books/bloc/get_books_bloc.dart';
 import 'package:two_books/bloc/scroll_to_top_bloc.dart';
-import 'package:two_books/models/book/book.dart';
-import 'package:two_books/models/book/book_response.dart';
+import 'package:two_books/models/book.dart';
+import 'package:two_books/models/response/book_response.dart';
 import 'package:two_books/screens/book_details_screen.dart';
 import 'package:two_books/widgets/book_summary_card.dart';
 import 'package:two_books/widgets/error_list_tile.dart';

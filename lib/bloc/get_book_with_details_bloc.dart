@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:two_books/models/book/book_with_details_response.dart';
+import 'package:two_books/models/response/book_with_details_response.dart';
 import 'package:two_books/repository/api_repository.dart';
 
 class GetBookWithDetailsBloc {

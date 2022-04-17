@@ -1,4 +1,4 @@
-import 'package:two_books/models/book/book.dart';
+import 'package:two_books/models/book.dart';
 
 class BooksResponse {
   final List<Book> books;
