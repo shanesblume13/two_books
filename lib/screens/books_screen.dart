@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:two_books/bloc/get_books_bloc.dart';
-import 'package:two_books/bloc/scroll_to_top_bloc.dart';
 import 'package:two_books/models/book/book.dart';
 import 'package:two_books/models/book/book_response.dart';
 import 'package:two_books/screens/book_details_screen.dart';
@@ -20,10 +19,10 @@ class BooksScreen extends StatefulWidget {
 class _BooksScreenState extends State<BooksScreen> {
   final TextEditingController _searchController = TextEditingController();
   String searchText = '';
+  final ScrollController scrollController = ScrollController();
 
   @override
   initState() {
-    scrollToTopBloc.setupScrollListener(ScrollController());
     getBooksBloc.getBooks();
 
     super.initState();
@@ -31,7 +30,6 @@ class _BooksScreenState extends State<BooksScreen> {
 
   @override
   void dispose() {
-    scrollToTopBloc.drainStream();
     getBooksBloc.drainStream();
     super.dispose();
   }
@@ -85,7 +83,9 @@ class _BooksScreenState extends State<BooksScreen> {
           ],
         ),
       ),
-      floatingActionButton: const ScrollToTopFAB(),
+      floatingActionButton: ScrollToTopFAB(
+        scrollController: scrollController,
+      ),
     );
   }
 
@@ -132,7 +132,7 @@ class _BooksScreenState extends State<BooksScreen> {
     }
 
     return ListView.builder(
-      controller: scrollToTopBloc.scrollController,
+      controller: scrollController,
       itemCount: books.length,
       itemBuilder: (context, index) {
         Book book = books[index];
